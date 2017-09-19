@@ -2,6 +2,7 @@ package com.example.hafiz.instagramclone;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -10,20 +11,23 @@ import android.view.MenuItem;
 import com.example.hafiz.instagramclone.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-public class HomeActivity extends AppCompatActivity {
+/**
+ * Created by hafiz on 9/18/2017.
+ */
 
-    private static final String TAG = "HomeActivity";
-    private static final int ACITIVITY_NUM = 0;
-    private Context mContext = HomeActivity.this;
+public class SearchActivity extends AppCompatActivity {
+    private static final String TAG = "SearchActivity";
+    private static final int ACITIVITY_NUM = 1;
+    private Context mContext = SearchActivity.this;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Log.d(TAG, "onCreate: starting");
+        Log.d(TAG, "onCreate: started");
+
         setupBottomNavigationView();
     }
-
     private void setupBottomNavigationView() {
         Log.d(TAG, "setupBottomNavigationView: setting up bottom navigation view");
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
