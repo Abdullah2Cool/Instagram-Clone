@@ -1,4 +1,4 @@
-package com.example.hafiz.instagramclone;
+package com.example.hafiz.instagramclone.Share;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.hafiz.instagramclone.R;
 import com.example.hafiz.instagramclone.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -15,17 +16,17 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
  * Created by hafiz on 9/18/2017.
  */
 
-public class SearchActivity extends AppCompatActivity {
-    private static final String TAG = "SearchActivity";
-    private static final int ACITIVITY_NUM = 1;
-    private Context mContext = SearchActivity.this;
+public class ShareActivity extends AppCompatActivity {
+    private static final String TAG = "ShareActivity";
+    private static final int ACITIVITY_NUM = 2;
+    private Context mContext = ShareActivity.this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Log.d(TAG, "onCreate: started");
-
+        
         setupBottomNavigationView();
     }
     private void setupBottomNavigationView() {
