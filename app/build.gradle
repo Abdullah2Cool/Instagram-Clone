@@ -33,4 +33,7 @@ dependencies {
 
     //Bottom Navigation Helper Class
     compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.3'
+
+    // Round image dependencies
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }
