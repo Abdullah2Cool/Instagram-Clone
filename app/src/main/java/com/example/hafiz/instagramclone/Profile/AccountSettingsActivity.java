@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * Created by hafiz on 9/20/2017.
  */
 
-class AccountSettingsActivity extends AppCompatActivity {
+public class AccountSettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "AccountSettingsActivity";
     private Context mContext = AccountSettingsActivity.this;
