@@ -39,6 +39,9 @@ dependencies {
 
     // Image loader library
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    // Firebase Authentication
+    compile 'com.google.firebase:firebase-auth:11.4.0'
 }
 
 // Firebase

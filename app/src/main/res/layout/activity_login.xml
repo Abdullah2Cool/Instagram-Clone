@@ -16,8 +16,7 @@
             android:layout_height="75dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="25dp"
-            android:src="@drawable/instagram_logo"
-            />
+            android:src="@drawable/instagram_logo" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -53,8 +52,8 @@
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/white_rounded_button"
             android:padding="12dp"
             android:text="Login" />
@@ -77,9 +76,10 @@
         android:layout_centerInParent="true" />
 
     <TextView
+        android:id="@+id/pleaseWait"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginRequestLoadingProgressbar"
+        android:layout_below="@+id/progressBar"
         android:layout_centerInParent="true"
         android:text="Please wait..."
         android:textColor="@color/black"
