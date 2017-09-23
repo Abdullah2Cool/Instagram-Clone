@@ -45,11 +45,8 @@ class AccountSettingsActivity extends AppCompatActivity {
         relativeLayout = findViewById(R.id.relLayout1);
 
         setupBottomNavigationView();
-
         setupSettingsList();
-
         setupFragments();
-
         // Setup back button
         ImageView imageView = findViewById(R.id.backArrow);
 
