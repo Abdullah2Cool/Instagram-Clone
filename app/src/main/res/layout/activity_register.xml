@@ -42,7 +42,7 @@
             android:layout_marginTop="8dp">
 
             <EditText
-                android:id="@+id/input_name"
+                android:id="@+id/input_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Full Name"
@@ -84,6 +84,7 @@
         android:layout_centerInParent="true" />
 
     <TextView
+        android:id="@+id/pleaseWait"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

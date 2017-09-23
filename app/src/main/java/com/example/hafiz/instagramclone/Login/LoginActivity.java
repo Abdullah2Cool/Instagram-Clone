@@ -1,6 +1,7 @@
 package com.example.hafiz.instagramclone.Login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hafiz.instagramclone.Home.HomeActivity;
 import com.example.hafiz.instagramclone.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         init();
     }
 
+
     private boolean isStringNull(String string) {
         Log.d(TAG, "isStringNull: checking if string is null");
         if (string == "") {
@@ -65,22 +68,23 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /*
-    --------------------------------Firebase-----------------------------------
+    ------------------------------------ Firebase ---------------------------------------------
      */
 
     private void init() {
-        // initialize the button for logging in
-        Button btnLogin = findViewById(R.id.btn_login);
+
+        //initialize the button for logging in
+        Button btnLogin = (Button) findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: attempting to login.");
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: attempting to log in.");
 
                 String email = mEmail.getText().toString();
                 String password = mPassword.getText().toString();
 
                 if (isStringNull(email) && isStringNull(password)) {
-                    Toast.makeText(mContext, "You must fill out all the fields.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "You must fill out all the fields", Toast.LENGTH_SHORT).show();
                 } else {
                     mProgressBar.setVisibility(View.VISIBLE);
                     mPleaseWait.setVisibility(View.VISIBLE);
@@ -96,21 +100,45 @@ public class LoginActivity extends AppCompatActivity {
                                     // signed in user can be handled in the listener.
                                     if (!task.isSuccessful()) {
                                         Log.w(TAG, "signInWithEmail:failed", task.getException());
-                                        Toast.makeText(mContext, R.string.auth_failed,
+
+                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed),
                                                 Toast.LENGTH_SHORT).show();
+                                        mProgressBar.setVisibility(View.GONE);
+                                        mPleaseWait.setVisibility(View.GONE);
                                     } else {
-                                        Log.w(TAG, "onComplete: login success.");
-                                        Toast.makeText(mContext, R.string.auth_success,
+                                        Log.d(TAG, "signInWithEmail: successful login");
+                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_success),
                                                 Toast.LENGTH_SHORT).show();
+                                        mProgressBar.setVisibility(View.GONE);
+                                        mPleaseWait.setVisibility(View.GONE);
+                                                 /*
+         If the user is logged in then navigate to HomeActivity and call 'finish()'
+          */
+                                        if (mAuth.getCurrentUser() != null) {
+                                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
                                     }
-                                    mProgressBar.setVisibility(View.GONE);
-                                    mPleaseWait.setVisibility(View.GONE);
+
                                     // ...
                                 }
                             });
                 }
+
             }
         });
+
+        TextView linkSignUp = findViewById(R.id.link_signup);
+        linkSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: navigating to register screen");
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     /**

@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
         setupViewPager();
     }
 
-    private void initImageLoader () {
+    private void initImageLoader() {
         UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
         ImageLoader.getInstance().init(universalImageLoader.getConfig());
     }
@@ -82,20 +82,22 @@ public class HomeActivity extends AppCompatActivity {
 
     /**
      * checks to see if the @param 'user' is logged in
+     *
      * @param user
      */
-    private void checkCurrentUser(FirebaseUser user){
+    private void checkCurrentUser(FirebaseUser user) {
         Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
 
-        if(user == null){
+        if (user == null) {
             Intent intent = new Intent(mContext, LoginActivity.class);
             startActivity(intent);
         }
     }
+
     /**
      * Setup the firebase auth object
      */
-    private void setupFirebaseAuth(){
+    private void setupFirebaseAuth() {
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
 
         mAuth = FirebaseAuth.getInstance();
@@ -134,4 +136,5 @@ public class HomeActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
 }
