@@ -24,6 +24,7 @@
         android:id="@+id/ic_android"
         android:icon="@drawable/ic_android"
         android:title="">
+        <!---->
     </item>
 
 </menu>
