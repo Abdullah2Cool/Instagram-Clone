@@ -11,6 +11,7 @@ import java.util.List;
  * Created by hafiz on 9/19/2017.
  */
 
+// helps with the FragmentPagerAdapter and creating new fragments
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private final List <Fragment> mFragmentList = new ArrayList<>();

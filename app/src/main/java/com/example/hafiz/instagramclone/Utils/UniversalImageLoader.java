@@ -47,7 +47,7 @@ public class UniversalImageLoader {
 
     /**
      * this method can be used to set images that are static. It can't be used if the images are
-     * being changed in the fragment or activity - OR if they are being set in a list or a gridview
+     * being changed in the fragment or activity
      * @param imgUrl
      * @param image
      * @param progressBar

@@ -17,6 +17,11 @@ import com.example.hafiz.instagramclone.R;
 import com.example.hafiz.instagramclone.Utils.FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by hafiz on 9/22/2017.
@@ -29,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseMethods firebaseMethods;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference myRef;
 
     private Context mContext;
     private String email, username, password;
@@ -36,6 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView mPleaseWait;
     private ProgressBar mProgressBar;
     private Button btnRegister;
+
+    private String append = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,12 +91,12 @@ public class RegisterActivity extends AppCompatActivity {
      */
     private void initWidgets() {
         Log.d(TAG, "initWidgets: Initializing Widgets.");
-        mEmail = (EditText) findViewById(R.id.input_email);
-        mUsername = (EditText) findViewById(R.id.input_username);
-        btnRegister = (Button) findViewById(R.id.btn_register);
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mPleaseWait = (TextView) findViewById(R.id.pleaseWait);
-        mPassword = (EditText) findViewById(R.id.input_password);
+        mEmail = findViewById(R.id.input_email);
+        mUsername = findViewById(R.id.input_username);
+        btnRegister = findViewById(R.id.btn_register);
+        mProgressBar = findViewById(R.id.progressBar);
+        mPleaseWait = findViewById(R.id.pleaseWait);
+        mPassword = findViewById(R.id.input_password);
         mContext = RegisterActivity.this;
         mProgressBar.setVisibility(View.GONE);
         mPleaseWait.setVisibility(View.GONE);
@@ -120,10 +129,35 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+                mFirebaseDatabase = FirebaseDatabase.getInstance();
+                myRef = mFirebaseDatabase.getReference();
 
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
+                    // if there is any change in the database
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) { // if the change was successful
+                            // make sure the username is not already in use
+                            if (firebaseMethods.checkIfUsernameExists(username, dataSnapshot)) {
+                                // generate a random key
+                                append = myRef.push().getKey().substring(3,10);
+                                Log.d(TAG, "onDataChange: appending random string to username: " + append);
+                            }
+                            username += append;
+
+                            // add a new user to the database
+
+                            // add new user account setting to database
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) { // if the change was unsuccessful
+
+                        }
+                    });
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");

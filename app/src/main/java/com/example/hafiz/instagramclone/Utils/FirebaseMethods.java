@@ -5,16 +5,19 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.hafiz.instagramclone.Models.User;
 import com.example.hafiz.instagramclone.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 
 /**
  * Created by hafiz on 9/23/2017.
  */
 
+// helper class for registrering new users.
 public class FirebaseMethods {
     private static final String TAG = "FirebaseMethods";
 
@@ -32,6 +35,26 @@ public class FirebaseMethods {
         if (mAuth.getCurrentUser() != null) {
             userID = mAuth.getCurrentUser().getUid();
         }
+    }
+
+
+    public boolean checkIfUsernameExists(String username, DataSnapshot dataSnapshot) {
+        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists");
+
+        User user = new User();
+
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
+            // attach the name in the database to the user
+            String UsernameinDB = ds.getValue(User.class).getUsername();
+            user.setUsername(UsernameinDB);
+
+            if (StringManipulation.expandUsername(user.getUsername()).equals(username)) {
+                Log.d(TAG, "checkIfUsernameExists: Found a match");
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -59,7 +82,6 @@ public class FirebaseMethods {
                             userID = mAuth.getCurrentUser().getUid();
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
                         }
-
                     }
                 });
     }

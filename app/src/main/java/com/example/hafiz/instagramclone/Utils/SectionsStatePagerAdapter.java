@@ -12,6 +12,7 @@ import java.util.List;
  * Created by hafiz on 9/21/2017.
  */
 
+// same as SectionsPagerAdapter but this one loads fragments as needed
 public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
 
     private final List <Fragment> mFragmentList = new ArrayList<>();

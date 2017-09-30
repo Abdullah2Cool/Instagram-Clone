@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: started.");
 
         mContext = LoginActivity.this;
+        // parts of the layout that need to be changed later on
         mProgressBar = findViewById(R.id.progressBar);
         mPleaseWait = findViewById(R.id.pleaseWait);
         mEmail = findViewById(R.id.input_email);

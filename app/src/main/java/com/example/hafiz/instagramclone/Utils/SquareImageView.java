@@ -8,6 +8,7 @@ import android.util.AttributeSet;
  * Created by hafiz on 9/22/2017.
  */
 
+// our custom imageview for the grid
 public class SquareImageView extends AppCompatImageView {
     public SquareImageView(Context context) {
         super(context);
@@ -23,6 +24,6 @@ public class SquareImageView extends AppCompatImageView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec); // turn the image in a square
     }
 }

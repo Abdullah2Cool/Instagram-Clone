@@ -24,6 +24,7 @@ public class BottomNavigationViewHelper {
 
     public static void setupBottomNavigationView(BottomNavigationViewEx bottomNavigationViewEx) {
         Log.d(TAG, "setupBottomNavigationView: Setting up Bottom Navigation View");
+        // setup the preferences for the bottom navigation
         bottomNavigationViewEx.enableAnimation(false);
         bottomNavigationViewEx.enableItemShiftingMode(false);
         bottomNavigationViewEx.enableShiftingMode(false);
@@ -34,6 +35,7 @@ public class BottomNavigationViewHelper {
         view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // hook up each icon with the correct
                 switch (item.getItemId()) {
                     case R.id.ic_house:
                         Intent intent1  = new Intent(context, HomeActivity.class);

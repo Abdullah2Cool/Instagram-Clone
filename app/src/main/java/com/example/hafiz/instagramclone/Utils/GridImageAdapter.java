@@ -21,6 +21,7 @@ import java.util.ArrayList;
  * Created by hafiz on 9/22/2017.
  */
 
+// helps put the images in the grid
 public class GridImageAdapter extends ArrayAdapter<String> {
     private Context mContext;
     private LayoutInflater mInflater;
@@ -37,7 +38,7 @@ public class GridImageAdapter extends ArrayAdapter<String> {
         this.imgURLs = imgURLs;
     }
 
-
+    // the individual cell in a grid
     private static class ViewHolder {
         SquareImageView image;
         ProgressBar progressBar;

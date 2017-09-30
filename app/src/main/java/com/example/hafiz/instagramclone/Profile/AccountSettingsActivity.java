@@ -85,7 +85,8 @@ public class AccountSettingsActivity extends AppCompatActivity {
         settings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(TAG, "onItemClick: Navigating to fragment position#:" + i);
+                Log.d(TAG, "onItemClick: Navigating to fragment position#: " + i);
+                // display the correct fragment
                 setViewPager(i);
             }
         });

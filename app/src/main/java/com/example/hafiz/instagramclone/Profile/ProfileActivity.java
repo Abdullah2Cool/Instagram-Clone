@@ -50,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
         tempGridSetup();
     }
 
-    private void tempGridSetup(){
+    private void tempGridSetup() {
         ArrayList<String> imgURLs = new ArrayList<>();
         imgURLs.add("https://pbs.twimg.com/profile_images/616076655547682816/6gMRtQyY.jpg");
         imgURLs.add("https://i.redd.it/9bf67ygj710z.jpg");
@@ -68,18 +68,18 @@ public class ProfileActivity extends AppCompatActivity {
         setupImageGrid(imgURLs);
     }
 
-    private void setupImageGrid (ArrayList <String> imgURLs) {
+    private void setupImageGrid(ArrayList<String> imgURLs) {
         gridView = findViewById(R.id.gridView);
 
         int gridWidth = getResources().getDisplayMetrics().widthPixels;
-        int imgWidth = gridWidth /NUM_GRID_COLUMNS;
+        int imgWidth = gridWidth / NUM_GRID_COLUMNS;
         gridView.setColumnWidth(imgWidth);
 
         GridImageAdapter adapter = new GridImageAdapter(mContext, R.layout.layout_grid_imageview, "", imgURLs);
         gridView.setAdapter(adapter);
     }
 
-    private void setProfileImage () {
+    private void setProfileImage() {
         Log.d(TAG, "setProfileImage: Setting profile photo");
         String imgURL = "android.suvenconsultants.com/newimage/android-developer2.png";
         UniversalImageLoader.setImage(imgURL, profilePhoto, progressBar, "https://");

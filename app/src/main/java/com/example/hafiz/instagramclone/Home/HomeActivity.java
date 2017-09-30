@@ -24,8 +24,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeActivity";
-    private static final int ACITIVITY_NUM = 0;
-    private Context mContext = HomeActivity.this;
+    private static final int ACITIVITY_NUM = 0; // relates to it's index in the bottom navigation
+    private Context mContext = HomeActivity.this; // create for later ease of use
 
     // Firebase
     private FirebaseAuth mAuth;
@@ -45,32 +45,40 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initImageLoader() {
+        // setup the image loader with the third party universal image loader and it's config
         UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
         ImageLoader.getInstance().init(universalImageLoader.getConfig());
     }
 
     private void setupBottomNavigationView() {
         Log.d(TAG, "setupBottomNavigationView: setting up bottom navigation view");
+        // setting up the bottom navigation layout/menu with third party library
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+
+        // highlight the correct tab in the bottom navigation
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACITIVITY_NUM);
         menuItem.setChecked(true);
     }
 
     private void setupViewPager() {
+        // add individual fragments to the tabs
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new CameraFragment());
         adapter.addFragment(new HomeFragment());
         adapter.addFragment(new MessagesFragment());
 
+        // setup the viewpager with the adapter
         ViewPager viewPager = findViewById(R.id.container);
         viewPager.setAdapter(adapter);
 
+        // setup the tabs with the viewpager
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        // set the icons for each of the tabs
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_camera);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_instagram);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_arrow);
@@ -89,6 +97,7 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
 
         if (user == null) {
+            // if the user isn't logged in, start the login activity
             Intent intent = new Intent(mContext, LoginActivity.class);
             startActivity(intent);
         }
@@ -125,6 +134,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        // set the listener for the current user
         mAuth.addAuthStateListener(mAuthListener);
         checkCurrentUser(mAuth.getCurrentUser());
     }
