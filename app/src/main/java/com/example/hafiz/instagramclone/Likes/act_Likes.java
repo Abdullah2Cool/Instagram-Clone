@@ -9,17 +9,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.hafiz.instagramclone.R;
-import com.example.hafiz.instagramclone.Utils.BottomNavigationViewHelper;
+import com.example.hafiz.instagramclone.Utils.util_BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 /**
  * Created by hafiz on 9/18/2017.
  */
 
-public class LikesActivity extends AppCompatActivity {
-    private static final String TAG = "LikesActivity";
+public class act_Likes extends AppCompatActivity {
+    private static final String TAG = "act_Likes";
     private static final int ACITIVITY_NUM = 3;
-    private Context mContext = LikesActivity.this;
+    private Context mContext = act_Likes.this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +32,8 @@ public class LikesActivity extends AppCompatActivity {
     private void setupBottomNavigationView() {
         Log.d(TAG, "setupBottomNavigationView: setting up bottom navigation view");
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        util_BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
+        util_BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACITIVITY_NUM);
         menuItem.setChecked(true);

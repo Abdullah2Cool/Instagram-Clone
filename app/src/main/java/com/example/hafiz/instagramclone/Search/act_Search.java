@@ -1,4 +1,4 @@
-package com.example.hafiz.instagramclone.Share;
+package com.example.hafiz.instagramclone.Search;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,31 +9,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.hafiz.instagramclone.R;
-import com.example.hafiz.instagramclone.Utils.BottomNavigationViewHelper;
+import com.example.hafiz.instagramclone.Utils.util_BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 /**
  * Created by hafiz on 9/18/2017.
  */
 
-public class ShareActivity extends AppCompatActivity {
-    private static final String TAG = "ShareActivity";
-    private static final int ACITIVITY_NUM = 2;
-    private Context mContext = ShareActivity.this;
+public class act_Search extends AppCompatActivity {
+    private static final String TAG = "act_Search";
+    private static final int ACITIVITY_NUM = 1;
+    private Context mContext = act_Search.this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Log.d(TAG, "onCreate: started");
-        
+
         setupBottomNavigationView();
     }
     private void setupBottomNavigationView() {
         Log.d(TAG, "setupBottomNavigationView: setting up bottom navigation view");
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        util_BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
+        util_BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACITIVITY_NUM);
         menuItem.setChecked(true);

@@ -16,8 +16,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.example.hafiz.instagramclone.R;
-import com.example.hafiz.instagramclone.Utils.BottomNavigationViewHelper;
-import com.example.hafiz.instagramclone.Utils.SectionsStatePagerAdapter;
+import com.example.hafiz.instagramclone.Utils.util_BottomNavigationViewHelper;
+import com.example.hafiz.instagramclone.Utils.util_SectionsStatePagerAdapter;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.util.ArrayList;
@@ -26,13 +26,13 @@ import java.util.ArrayList;
  * Created by hafiz on 9/20/2017.
  */
 
-public class AccountSettingsActivity extends AppCompatActivity {
+public class act_AccountSettings extends AppCompatActivity {
 
-    private static final String TAG = "AccountSettingsActivity";
-    private Context mContext = AccountSettingsActivity.this;
+    private static final String TAG = "act_AccountSettings";
+    private Context mContext = act_AccountSettings.this;
     private static final int ACITIVITY_NUM = 4;
 
-    private SectionsStatePagerAdapter sectionsStatePagerAdapter;
+    private util_SectionsStatePagerAdapter sectionsStatePagerAdapter;
     private ViewPager viewPager;
     private RelativeLayout relativeLayout;
 
@@ -59,9 +59,9 @@ public class AccountSettingsActivity extends AppCompatActivity {
     }
 
     private void setupFragments () {
-        sectionsStatePagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
-        sectionsStatePagerAdapter.addFragment(new EditProfileFragment(), getString(R.string.edit_profile_fragment));
-        sectionsStatePagerAdapter.addFragment(new SignOutFragment(), getString(R.string.sign_out_fragment));
+        sectionsStatePagerAdapter = new util_SectionsStatePagerAdapter(getSupportFragmentManager());
+        sectionsStatePagerAdapter.addFragment(new frag_EditProfile(), getString(R.string.edit_profile_fragment));
+        sectionsStatePagerAdapter.addFragment(new frag_SignOut(), getString(R.string.sign_out_fragment));
     }
 
     private void setViewPager(int fragmentNumber) {
@@ -95,8 +95,8 @@ public class AccountSettingsActivity extends AppCompatActivity {
     private void setupBottomNavigationView() {
         Log.d(TAG, "setupBottomNavigationView: setting up bottom navigation view");
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        util_BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
+        util_BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACITIVITY_NUM);
         menuItem.setChecked(true);

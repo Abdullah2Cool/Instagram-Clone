@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.hafiz.instagramclone.R;
-import com.example.hafiz.instagramclone.Utils.BottomNavigationViewHelper;
-import com.example.hafiz.instagramclone.Utils.GridImageAdapter;
-import com.example.hafiz.instagramclone.Utils.UniversalImageLoader;
+import com.example.hafiz.instagramclone.Utils.util_BottomNavigationViewHelper;
+import com.example.hafiz.instagramclone.Utils.util_GridImageAdapter;
+import com.example.hafiz.instagramclone.Utils.util_UniversalImageLoader;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.util.ArrayList;
@@ -26,12 +26,12 @@ import java.util.ArrayList;
  * Created by hafiz on 9/18/2017.
  */
 
-public class ProfileActivity extends AppCompatActivity {
-    private static final String TAG = "ProfileActivity";
+public class act_Profile extends AppCompatActivity {
+    private static final String TAG = "act_Profile";
     private static final int ACITIVITY_NUM = 4;
     private static final int NUM_GRID_COLUMNS = 3;
 
-    private Context mContext = ProfileActivity.this;
+    private Context mContext = act_Profile.this;
     private ProgressBar progressBar;
     private ImageView profilePhoto;
     private GridView gridView;
@@ -75,14 +75,14 @@ public class ProfileActivity extends AppCompatActivity {
         int imgWidth = gridWidth / NUM_GRID_COLUMNS;
         gridView.setColumnWidth(imgWidth);
 
-        GridImageAdapter adapter = new GridImageAdapter(mContext, R.layout.layout_grid_imageview, "", imgURLs);
+        util_GridImageAdapter adapter = new util_GridImageAdapter(mContext, R.layout.layout_grid_imageview, "", imgURLs);
         gridView.setAdapter(adapter);
     }
 
     private void setProfileImage() {
         Log.d(TAG, "setProfileImage: Setting profile photo");
         String imgURL = "android.suvenconsultants.com/newimage/android-developer2.png";
-        UniversalImageLoader.setImage(imgURL, profilePhoto, progressBar, "https://");
+        util_UniversalImageLoader.setImage(imgURL, profilePhoto, progressBar, "https://");
     }
 
     private void setupActivityWidgets() {
@@ -101,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: Navigating to account settings.");
-                Intent intent = new Intent(mContext, AccountSettingsActivity.class);
+                Intent intent = new Intent(mContext, act_AccountSettings.class);
                 startActivity(intent);
             }
         });
@@ -110,8 +110,8 @@ public class ProfileActivity extends AppCompatActivity {
     private void setupBottomNavigationView() {
         Log.d(TAG, "setupBottomNavigationView: setting up bottom navigation view");
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        util_BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
+        util_BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACITIVITY_NUM);
         menuItem.setChecked(true);

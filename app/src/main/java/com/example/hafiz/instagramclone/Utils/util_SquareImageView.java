@@ -9,16 +9,16 @@ import android.util.AttributeSet;
  */
 
 // our custom imageview for the grid
-public class SquareImageView extends AppCompatImageView {
-    public SquareImageView(Context context) {
+public class util_SquareImageView extends AppCompatImageView {
+    public util_SquareImageView(Context context) {
         super(context);
     }
 
-    public SquareImageView(Context context, AttributeSet attrs) {
+    public util_SquareImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SquareImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public util_SquareImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

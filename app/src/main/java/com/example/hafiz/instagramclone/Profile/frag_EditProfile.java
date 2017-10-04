@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.hafiz.instagramclone.R;
-import com.example.hafiz.instagramclone.Utils.UniversalImageLoader;
+import com.example.hafiz.instagramclone.Utils.util_UniversalImageLoader;
 
 /**
  * Created by hafiz on 9/21/2017.
  */
 
-public class EditProfileFragment extends Fragment {
+public class frag_EditProfile extends Fragment {
 
-    private static final String TAG = "EditProfileFragment";
+    private static final String TAG = "frag_EditProfile";
     private ImageView mProfilePhote;
 
     @Nullable
@@ -43,6 +43,6 @@ public class EditProfileFragment extends Fragment {
     private void setProfileImage () {
         Log.d(TAG, "setProfileImage: setting profile image");
         String imgURL = "android.suvenconsultants.com/newimage/android-developer2.png";
-        UniversalImageLoader.setImage(imgURL, mProfilePhote, null, "http://");
+        util_UniversalImageLoader.setImage(imgURL, mProfilePhote, null, "http://");
     }
 }

@@ -12,11 +12,11 @@ import java.util.List;
  */
 
 // helps with the FragmentPagerAdapter and creating new fragments
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class util_SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private final List <Fragment> mFragmentList = new ArrayList<>();
 
-    public SectionsPagerAdapter(FragmentManager fm) {
+    public util_SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

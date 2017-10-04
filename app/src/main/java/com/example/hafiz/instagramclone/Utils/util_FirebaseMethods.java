@@ -22,8 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 // helper class for registrering new users.
-public class FirebaseMethods {
-    private static final String TAG = "FirebaseMethods";
+public class util_FirebaseMethods {
+    private static final String TAG = "util_FirebaseMethods";
 
     //firebase
     private FirebaseAuth mAuth;
@@ -34,7 +34,7 @@ public class FirebaseMethods {
 
     private Context mContext;
 
-    public FirebaseMethods(Context context) {
+    public util_FirebaseMethods(Context context) {
         mAuth = FirebaseAuth.getInstance();
         mContext = context;
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -56,7 +56,7 @@ public class FirebaseMethods {
             String UsernameinDB = ds.getValue(User.class).getUsername();
             user.setUsername(UsernameinDB);
 
-            if (StringManipulation.expandUsername(user.getUsername()).equals(username)) {
+            if (util_StringManipulation.expandUsername(user.getUsername()).equals(username)) {
                 Log.d(TAG, "checkIfUsernameExists: Found a match");
                 return true;
             }
@@ -126,7 +126,7 @@ public class FirebaseMethods {
      * @param profie_photoe
      */
     public void addNewUser(String email, String username, String description, String website, String profie_photoe) {
-        User user = new User(userID, 1, email, StringManipulation.condenseUsername(username));
+        User user = new User(userID, 1, email, util_StringManipulation.condenseUsername(username));
 
         myRef.child(mContext.getString(R.string.dbname_users))
                 .child(userID)
@@ -139,7 +139,7 @@ public class FirebaseMethods {
                 0,
                 0,
                 profie_photoe,
-                StringManipulation.condenseUsername(username),
+                util_StringManipulation.condenseUsername(username),
                 website
         );
 

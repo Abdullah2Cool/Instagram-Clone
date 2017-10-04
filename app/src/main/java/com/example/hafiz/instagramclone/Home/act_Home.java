@@ -11,21 +11,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.hafiz.instagramclone.Login.LoginActivity;
+import com.example.hafiz.instagramclone.Login.act_Login;
 import com.example.hafiz.instagramclone.R;
-import com.example.hafiz.instagramclone.Utils.BottomNavigationViewHelper;
-import com.example.hafiz.instagramclone.Utils.SectionsPagerAdapter;
-import com.example.hafiz.instagramclone.Utils.UniversalImageLoader;
+import com.example.hafiz.instagramclone.Utils.util_BottomNavigationViewHelper;
+import com.example.hafiz.instagramclone.Utils.util_SectionsPagerAdapter;
+import com.example.hafiz.instagramclone.Utils.util_UniversalImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class HomeActivity extends AppCompatActivity {
+public class act_Home extends AppCompatActivity {
 
-    private static final String TAG = "HomeActivity";
+    private static final String TAG = "act_Home";
     private static final int ACITIVITY_NUM = 0; // relates to it's index in the bottom navigation
-    private Context mContext = HomeActivity.this; // create for later ease of use
+    private Context mContext = act_Home.this; // create for later ease of use
 
     // Firebase
     private FirebaseAuth mAuth;
@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initImageLoader() {
         // setup the image loader with the third party universal image loader and it's config
-        UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
+        util_UniversalImageLoader universalImageLoader = new util_UniversalImageLoader(mContext);
         ImageLoader.getInstance().init(universalImageLoader.getConfig());
     }
 
@@ -56,8 +56,8 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "setupBottomNavigationView: setting up bottom navigation view");
         // setting up the bottom navigation layout/menu with third party library
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        util_BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
+        util_BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
 
         // highlight the correct tab in the bottom navigation
         Menu menu = bottomNavigationViewEx.getMenu();
@@ -67,10 +67,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         // add individual fragments to the tabs
-        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CameraFragment());
-        adapter.addFragment(new HomeFragment());
-        adapter.addFragment(new MessagesFragment());
+        util_SectionsPagerAdapter adapter = new util_SectionsPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new frag_Camera());
+        adapter.addFragment(new frag_Home());
+        adapter.addFragment(new frag_Messages());
 
         // setup the viewpager with the adapter
         ViewPager viewPager = findViewById(R.id.container);
@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (user == null) {
             // if the user isn't logged in, start the login activity
-            Intent intent = new Intent(mContext, LoginActivity.class);
+            Intent intent = new Intent(mContext, act_Login.class);
             startActivity(intent);
         }
     }

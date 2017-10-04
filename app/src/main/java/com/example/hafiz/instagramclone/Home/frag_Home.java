@@ -13,8 +13,8 @@ import com.example.hafiz.instagramclone.R;
  * Created by hafiz on 9/19/2017.
  */
 
-public class HomeFragment extends Fragment {
-    private static final String TAG = "HomeFragment";
+public class frag_Home extends Fragment {
+    private static final String TAG = "frag_Home";
 
     @Nullable
     @Override

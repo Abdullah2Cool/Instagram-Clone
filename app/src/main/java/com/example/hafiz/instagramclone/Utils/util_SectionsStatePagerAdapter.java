@@ -12,15 +12,15 @@ import java.util.List;
  * Created by hafiz on 9/21/2017.
  */
 
-// same as SectionsPagerAdapter but this one loads fragments as needed
-public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
+// same as util_SectionsPagerAdapter but this one loads fragments as needed
+public class util_SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
 
     private final List <Fragment> mFragmentList = new ArrayList<>();
     private final HashMap <Fragment, Integer> mFragments = new HashMap<>();
     private final HashMap <String, Integer> mFragmentNumbers = new HashMap<>();
     private final HashMap <Integer, String> mFragmentNames = new HashMap<>();
 
-    public SectionsStatePagerAdapter(FragmentManager fm) {
+    public util_SectionsStatePagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

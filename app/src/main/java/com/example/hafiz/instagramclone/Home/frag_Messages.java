@@ -1,4 +1,4 @@
-package com.example.hafiz.instagramclone.Profile;
+package com.example.hafiz.instagramclone.Home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,15 +10,17 @@ import android.view.ViewGroup;
 import com.example.hafiz.instagramclone.R;
 
 /**
- * Created by hafiz on 9/21/2017.
+ * Created by hafiz on 9/19/2017.
  */
 
-public class SignOutFragment extends Fragment {
+public class frag_Messages extends Fragment {
+    private static final String TAG = "frag_Messages";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_signout, container, false);
+        View view = inflater.inflate(R.layout.fragment_messages, container, false);
+        
 
         return view;
     }

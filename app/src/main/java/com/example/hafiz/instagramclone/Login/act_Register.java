@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hafiz.instagramclone.R;
-import com.example.hafiz.instagramclone.Utils.FirebaseMethods;
+import com.example.hafiz.instagramclone.Utils.util_FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,13 +27,13 @@ import com.google.firebase.database.ValueEventListener;
  * Created by hafiz on 9/22/2017.
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class act_Register extends AppCompatActivity {
 
-    private static final String TAG = "RegisterActivity";
+    private static final String TAG = "act_Register";
     // Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseMethods firebaseMethods;
+    private util_FirebaseMethods firebaseMethods;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
 
@@ -50,8 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        mContext = RegisterActivity.this;
-        firebaseMethods = new FirebaseMethods(mContext);
+        mContext = act_Register.this;
+        firebaseMethods = new util_FirebaseMethods(mContext);
         Log.d(TAG, "onCreate: started.");
 
         initWidgets();
@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mPleaseWait = (TextView) findViewById(R.id.pleaseWait);
         mPassword = (EditText) findViewById(R.id.input_password);
-        mContext = RegisterActivity.this;
+        mContext = act_Register.this;
         mProgressBar.setVisibility(View.GONE);
         mPleaseWait.setVisibility(View.GONE);
 

@@ -13,13 +13,13 @@ import com.example.hafiz.instagramclone.R;
  * Created by hafiz on 9/19/2017.
  */
 
-public class MessagesFragment extends Fragment {
-    private static final String TAG = "MessagesFragment";
+public class frag_Camera extends Fragment {
+    private static final String TAG = "frag_Camera";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_messages, container, false);
+        View view = inflater.inflate(R.layout.fragment_camera, container, false);
         
 
         return view;

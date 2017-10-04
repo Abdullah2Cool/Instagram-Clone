@@ -7,19 +7,19 @@ import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.example.hafiz.instagramclone.Home.HomeActivity;
-import com.example.hafiz.instagramclone.Likes.LikesActivity;
-import com.example.hafiz.instagramclone.Profile.ProfileActivity;
+import com.example.hafiz.instagramclone.Home.act_Home;
+import com.example.hafiz.instagramclone.Likes.act_Likes;
+import com.example.hafiz.instagramclone.Profile.act_Profile;
 import com.example.hafiz.instagramclone.R;
-import com.example.hafiz.instagramclone.Search.SearchActivity;
-import com.example.hafiz.instagramclone.Share.ShareActivity;
+import com.example.hafiz.instagramclone.Search.act_Search;
+import com.example.hafiz.instagramclone.Share.act_Share;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 /**
  * Created by hafiz on 9/18/2017.
  */
 
-public class BottomNavigationViewHelper {
+public class util_BottomNavigationViewHelper {
     private static final String TAG = "BottomNavigationViewHel";
 
     public static void setupBottomNavigationView(BottomNavigationViewEx bottomNavigationViewEx) {
@@ -38,23 +38,23 @@ public class BottomNavigationViewHelper {
                 // hook up each icon with the correct
                 switch (item.getItemId()) {
                     case R.id.ic_house:
-                        Intent intent1  = new Intent(context, HomeActivity.class);
+                        Intent intent1  = new Intent(context, act_Home.class);
                         context.startActivity(intent1);
                         break;
                     case R.id.ic_search:
-                        Intent intent2  = new Intent(context, SearchActivity.class);
+                        Intent intent2  = new Intent(context, act_Search.class);
                         context.startActivity(intent2);
                         break;
                     case R.id.ic_circle:
-                        Intent intent3  = new Intent(context, ShareActivity.class);
+                        Intent intent3  = new Intent(context, act_Share.class);
                         context.startActivity(intent3);
                         break;
                     case R.id.ic_alert:
-                        Intent intent4  = new Intent(context, LikesActivity.class);
+                        Intent intent4  = new Intent(context, act_Likes.class);
                         context.startActivity(intent4);
                         break;
                     case R.id.ic_android:
-                        Intent intent5  = new Intent(context, ProfileActivity.class);
+                        Intent intent5  = new Intent(context, act_Profile.class);
                         context.startActivity(intent5);
                         break;
 

@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hafiz.instagramclone.Home.HomeActivity;
+import com.example.hafiz.instagramclone.Home.act_Home;
 import com.example.hafiz.instagramclone.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,9 +26,9 @@ import com.google.firebase.auth.FirebaseUser;
  * Created by hafiz on 9/22/2017.
  */
 
-public class LoginActivity extends AppCompatActivity {
+public class act_Login extends AppCompatActivity {
 
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = "act_Login";
     // Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Log.d(TAG, "onCreate: started.");
 
-        mContext = LoginActivity.this;
+        mContext = act_Login.this;
         // parts of the layout that need to be changed later on
         mProgressBar = findViewById(R.id.progressBar);
         mPleaseWait = findViewById(R.id.pleaseWait);
@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                     mPleaseWait.setVisibility(View.VISIBLE);
 
                     mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(act_Login.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (!task.isSuccessful()) {
                                         Log.w(TAG, "signInWithEmail:failed", task.getException());
 
-                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed),
+                                        Toast.makeText(act_Login.this, getString(R.string.auth_failed),
                                                 Toast.LENGTH_SHORT).show();
                                         mProgressBar.setVisibility(View.GONE);
                                         mPleaseWait.setVisibility(View.GONE);
@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                                         try{
                                             if(user.isEmailVerified()){
                                                 Log.d(TAG, "onComplete: success. email is verified.");
-                                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                Intent intent = new Intent(act_Login.this, act_Home.class);
                                                 startActivity(intent);
                                             }else{
                                                 Toast.makeText(mContext, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
@@ -140,16 +140,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to register screen");
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(act_Login.this, act_Register.class);
                 startActivity(intent);
             }
         });
 
          /*
-         If the user is logged in then navigate to HomeActivity and call 'finish()'
+         If the user is logged in then navigate to act_Home and call 'finish()'
           */
         if(mAuth.getCurrentUser() != null){
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            Intent intent = new Intent(act_Login.this, act_Home.class);
             startActivity(intent);
             finish();
         }
