@@ -91,12 +91,12 @@ public class RegisterActivity extends AppCompatActivity {
      */
     private void initWidgets() {
         Log.d(TAG, "initWidgets: Initializing Widgets.");
-        mEmail = findViewById(R.id.input_email);
-        mUsername = findViewById(R.id.input_username);
-        btnRegister = findViewById(R.id.btn_register);
-        mProgressBar = findViewById(R.id.progressBar);
-        mPleaseWait = findViewById(R.id.pleaseWait);
-        mPassword = findViewById(R.id.input_password);
+        mEmail = (EditText) findViewById(R.id.input_email);
+        mUsername = (EditText) findViewById(R.id.input_username);
+        btnRegister = (Button) findViewById(R.id.btn_register);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mPleaseWait = (TextView) findViewById(R.id.pleaseWait);
+        mPassword = (EditText) findViewById(R.id.input_password);
         mContext = RegisterActivity.this;
         mProgressBar.setVisibility(View.GONE);
         mPleaseWait.setVisibility(View.GONE);
@@ -124,40 +124,42 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
 
         mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                mFirebaseDatabase = FirebaseDatabase.getInstance();
-                myRef = mFirebaseDatabase.getReference();
 
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
-                    // if there is any change in the database
                     myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) { // if the change was successful
-                            // make sure the username is not already in use
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //1st check: Make sure the username is not already in use
                             if (firebaseMethods.checkIfUsernameExists(username, dataSnapshot)) {
-                                // generate a random key
-                                append = myRef.push().getKey().substring(3,10);
-                                Log.d(TAG, "onDataChange: appending random string to username: " + append);
+                                append = myRef.push().getKey().substring(3, 10);
+                                Log.d(TAG, "onDataChange: username already exists. Appending random string to name: " + append);
                             }
-                            username += append;
+                            username = username + append;
 
-                            // add a new user to the database
+                            //add new user to the database
                             firebaseMethods.addNewUser(email, username, "", "", "");
-                            Toast.makeText(mContext, "Signup success. Sending verification email.", Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
+
+                            mAuth.signOut();
                         }
 
                         @Override
-                        public void onCancelled(DatabaseError databaseError) { // if the change was unsuccessful
+                        public void onCancelled(DatabaseError databaseError) {
 
                         }
                     });
+                    finish();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");

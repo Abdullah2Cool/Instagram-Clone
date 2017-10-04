@@ -59,20 +59,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private boolean isStringNull(String string) {
-        Log.d(TAG, "isStringNull: checking if string is null");
-        if (string == "") {
+    private boolean isStringNull(String string){
+        Log.d(TAG, "isStringNull: checking string if null.");
+
+        if(string.equals("")){
             return true;
-        } else {
+        }
+        else{
             return false;
         }
     }
 
-    /*
+     /*
     ------------------------------------ Firebase ---------------------------------------------
      */
 
-    private void init() {
+    private void init(){
 
         //initialize the button for logging in
         Button btnLogin = (Button) findViewById(R.id.btn_login);
@@ -84,9 +86,9 @@ public class LoginActivity extends AppCompatActivity {
                 String email = mEmail.getText().toString();
                 String password = mPassword.getText().toString();
 
-                if (isStringNull(email) && isStringNull(password)) {
+                if(isStringNull(email) && isStringNull(password)){
                     Toast.makeText(mContext, "You must fill out all the fields", Toast.LENGTH_SHORT).show();
-                } else {
+                }else{
                     mProgressBar.setVisibility(View.VISIBLE);
                     mPleaseWait.setVisibility(View.VISIBLE);
 
@@ -95,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                                    FirebaseUser user = mAuth.getCurrentUser();
 
                                     // If sign in fails, display a message to the user. If sign in succeeds
                                     // the auth state listener will be notified and logic to handle the
@@ -106,19 +109,21 @@ public class LoginActivity extends AppCompatActivity {
                                                 Toast.LENGTH_SHORT).show();
                                         mProgressBar.setVisibility(View.GONE);
                                         mPleaseWait.setVisibility(View.GONE);
-                                    } else {
-                                        Log.d(TAG, "signInWithEmail: successful login");
-                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_success),
-                                                Toast.LENGTH_SHORT).show();
-                                        mProgressBar.setVisibility(View.GONE);
-                                        mPleaseWait.setVisibility(View.GONE);
-                                                 /*
-         If the user is logged in then navigate to HomeActivity and call 'finish()'
-          */
-                                        if (mAuth.getCurrentUser() != null) {
-                                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                            startActivity(intent);
-                                            finish();
+                                    }
+                                    else{
+                                        try{
+                                            if(user.isEmailVerified()){
+                                                Log.d(TAG, "onComplete: success. email is verified.");
+                                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                startActivity(intent);
+                                            }else{
+                                                Toast.makeText(mContext, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
+                                                mProgressBar.setVisibility(View.GONE);
+                                                mPleaseWait.setVisibility(View.GONE);
+                                                mAuth.signOut();
+                                            }
+                                        }catch (NullPointerException e){
+                                            Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
                                         }
                                     }
 
@@ -130,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        TextView linkSignUp = findViewById(R.id.link_signup);
+        TextView linkSignUp = (TextView) findViewById(R.id.link_signup);
         linkSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,12 +145,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+         /*
+         If the user is logged in then navigate to HomeActivity and call 'finish()'
+          */
+        if(mAuth.getCurrentUser() != null){
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     /**
      * Setup the firebase auth object
      */
-    private void setupFirebaseAuth() {
+    private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
 
         mAuth = FirebaseAuth.getInstance();

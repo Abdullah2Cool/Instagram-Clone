@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -65,12 +66,11 @@ public class FirebaseMethods {
 
     /**
      * Register a new email and password to Firebase Authentication
-     *
      * @param email
      * @param password
      * @param username
      */
-    public void registerNewEmail(final String email, String password, final String username) {
+    public void registerNewEmail(final String email, String password, final String username){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -84,15 +84,47 @@ public class FirebaseMethods {
                             Toast.makeText(mContext, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
 
-                        } else if (task.isSuccessful()) {
+                        }
+                        else if(task.isSuccessful()){
+                            //send verificaton email
+                            sendVerificationEmail();
+
                             userID = mAuth.getCurrentUser().getUid();
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
                         }
+
                     }
                 });
     }
 
+    public void sendVerificationEmail(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        if(user != null){
+            user.sendEmailVerification()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+
+                            }else{
+                                Toast.makeText(mContext, "couldn't send verification email.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Add information to the user node
+     * Add information to the user_account_settings node
+     *
+     * @param email
+     * @param username
+     * @param description
+     * @param website
+     * @param profie_photoe
+     */
     public void addNewUser(String email, String username, String description, String website, String profie_photoe) {
         User user = new User(userID, 1, email, StringManipulation.condenseUsername(username));
 
@@ -107,7 +139,7 @@ public class FirebaseMethods {
                 0,
                 0,
                 profie_photoe,
-                username,
+                StringManipulation.condenseUsername(username),
                 website
         );
 
