@@ -85,6 +85,17 @@ public class frag_Profile extends Fragment {
         setupToolbar();
         setupFirebaseAuth();
 
+        TextView editProfile = view.findViewById(R.id.textEditProfile);
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: navigating to " + mContext.getString(R.string.edit_profile_fragment));
+                Intent intent = new Intent(getActivity(), act_AccountSettings.class);
+                intent.putExtra(getString(R.string.calling_activity), getString(R.string.profile_activity));
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 

@@ -45,25 +45,38 @@ public class util_FirebaseMethods {
         }
     }
 
+    public void updateUsername (String username) {
+        Log.d(TAG, "updateUsername: updating username to:" + username);
 
-    public boolean checkIfUsernameExists(String username, DataSnapshot dataSnapshot) {
-        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists");
+        myRef.child(mContext.getString(R.string.dbname_users))
+                .child(userID)
+                .child(mContext.getString(R.string.field_username))
+                .setValue(username);
 
-        User user = new User();
-
-        for (DataSnapshot ds : dataSnapshot.child(userID).getChildren()) {
-            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
-            // attach the name in the database to the user
-            String UsernameinDB = ds.getValue(User.class).getUsername();
-            user.setUsername(UsernameinDB);
-
-            if (util_StringManipulation.expandUsername(user.getUsername()).equals(username)) {
-                Log.d(TAG, "checkIfUsernameExists: Found a match");
-                return true;
-            }
-        }
-        return false;
+        myRef.child(mContext.getString(R.string.dbname_user_account_settings))
+                .child(userID)
+                .child(mContext.getString(R.string.field_username))
+                .setValue(username);
     }
+
+//    public boolean checkIfUsernameExists(String username, DataSnapshot dataSnapshot) {
+//        Log.d(TAG, "checkIfUsernameExists: checking if " + username + " already exists");
+//
+//        User user = new User();
+//
+//        for (DataSnapshot ds : dataSnapshot.child(userID).getChildren()) {
+//            Log.d(TAG, "checkIfUsernameExists: datasnapshot: " + ds);
+//            // attach the name in the database to the user
+//            String UsernameinDB = ds.getValue(User.class).getUsername();
+//            user.setUsername(UsernameinDB);
+//
+//            if (util_StringManipulation.expandUsername(user.getUsername()).equals(username)) {
+//                Log.d(TAG, "checkIfUsernameExists: Found a match");
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     /**
      * Register a new email and password to Firebase Authentication
