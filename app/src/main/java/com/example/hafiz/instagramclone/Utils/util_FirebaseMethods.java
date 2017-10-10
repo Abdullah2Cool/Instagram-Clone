@@ -45,7 +45,7 @@ public class util_FirebaseMethods {
         }
     }
 
-    public void updateUsername (String username) {
+    public void updateUsername(String username) {
         Log.d(TAG, "updateUsername: updating username to:" + username);
 
         myRef.child(mContext.getString(R.string.dbname_users))
@@ -83,9 +83,8 @@ public class util_FirebaseMethods {
      *
      * @param email
      * @param password
-     * @param username
      */
-    public void registerNewEmail(final String email, String password, final String username) {
+    public void registerNewEmail(final String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -96,8 +95,7 @@ public class util_FirebaseMethods {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(mContext, R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, R.string.auth_failed, Toast.LENGTH_SHORT).show();
 
                         } else if (task.isSuccessful()) {
                             //send verificaton email
@@ -221,7 +219,7 @@ public class util_FirebaseMethods {
                                     .getValue(UserAccountSettings.class)
                                     .getFollowers()
                     );
-                    Log.d(TAG, "getUserSettings: retrieved user_account_settings information: "+ settings.toString());
+                    Log.d(TAG, "getUserSettings: retrieved user_account_settings information: " + settings.toString());
                 } catch (NullPointerException e) {
                     Log.d(TAG, "getUserAccountSettings: NullPointerException: " + e.getMessage());
                 }
