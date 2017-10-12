@@ -8,20 +8,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hafiz.instagramclone.Dialogs.dialog_ConfirmPassword;
 import com.example.hafiz.instagramclone.Models.User;
 import com.example.hafiz.instagramclone.Models.UserAccountSettings;
 import com.example.hafiz.instagramclone.Models.UserSettings;
 import com.example.hafiz.instagramclone.R;
 import com.example.hafiz.instagramclone.Utils.util_FirebaseMethods;
 import com.example.hafiz.instagramclone.Utils.util_UniversalImageLoader;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.ProviderQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by hafiz on 9/21/2017.
  */
 
-public class frag_EditProfile extends Fragment {
+public class frag_EditProfile extends Fragment implements dialog_ConfirmPassword.OnConfirmPasswordListener {
 
     private static final String TAG = "frag_EditProfile";
 
@@ -53,6 +58,65 @@ public class frag_EditProfile extends Fragment {
     private util_FirebaseMethods mFirebaseMethods;
     private String userID;
     private UserSettings mUserSettings;
+
+    @Override
+    public void onConfirmPassword(String password) {
+        // don't ever do this
+        Log.d(TAG, "onConfirmPassword: got the password: " + password);
+
+        // re-authenticate the user
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        // Get auth credentials from the user for re-authentication. The example below shows
+        // email and password credentials but there are multiple possible providers,
+        // such as GoogleAuthProvider or FacebookAuthProvider.
+        AuthCredential credential = EmailAuthProvider
+                .getCredential(user.getEmail(), password);
+
+        // Prompt the user to re-provide their sign-in credentials
+        user.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d(TAG, "onComplete: re-authentication failed.");
+                        }
+                        Log.d(TAG, "User re-authenticated.");
+
+                        // check to see if the emial is not already present in the database
+                        mAuth.fetchProvidersForEmail(mEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<ProviderQueryResult> task) {
+                                if (task.isSuccessful()) {
+                                    try {
+                                        if (task.getResult().getProviders().size() == 1) {
+                                            Log.d(TAG, "onComplete: that email is already in use.");
+                                            Toast.makeText(getActivity(), "That email is already in use.", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Log.d(TAG, "onComplete: that email is available.");
+
+                                            // the email is available so update it
+                                            mAuth.getCurrentUser().updateEmail(mEmail.getText().toString())
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Log.d(TAG, "User email address updated.");
+                                                                Toast.makeText(getActivity(), "That email is updated.", Toast.LENGTH_SHORT).show();
+                                                                mFirebaseMethods.updateEmail(mEmail.getText().toString());
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                    } catch (NullPointerException e) {
+                                        Log.d(TAG, "onComplete: NullPointerException: " + e.getMessage());
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+    }
 
     @Nullable
     @Override
@@ -157,25 +221,48 @@ public class frag_EditProfile extends Fragment {
         final String email = mEmail.getText().toString();
         final long phoneNumber = Long.parseLong(mPhoneNumber.getText().toString());
 
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // case 1: the user did not change their username
-                if (!mUserSettings.getUser().getUsername().equals(username)) {
-                    checkIfUsernameExists(username);
-                } else {
 
-                }
+        // case 1: the user made a change to their username
+        if (!mUserSettings.getUser().getUsername().equals(username)) {
+            checkIfUsernameExists(username);
+        }
+        // case 2: the user made a change to their email
+        if (!mUserSettings.getUser().getEmail().equals(email)) {
+            // step 1) reauthenticate
+            //          - Confirm the password and email
+            dialog_ConfirmPassword confirmPassword = new dialog_ConfirmPassword();
+            confirmPassword.show(getFragmentManager(), getString(R.string.confirm_password_dialog));
+            confirmPassword.setTargetFragment(frag_EditProfile.this, 1);
+            // step 2) check if the email is already registered
+            //          - fetechProvidersForEmail(String email)
+            // step 3) change the email
+            //          - submit the new email to the database and authentication
 
-                // case 2: the user changed their username therefore we need to check uniqueness
+
+            if (!mUserSettings.getUserAccountSettings().getDisplay_name().equals(displayName)) {
+                // update display name
+                mFirebaseMethods.updateUserAccountSettings(displayName, null, null, 0);
             }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            if (!mUserSettings.getUserAccountSettings().getWebsite().equals(website)) {
+                // update display name
+                mFirebaseMethods.updateUserAccountSettings(null, website, null, 0);
             }
-        });
+
+            if (!mUserSettings.getUserAccountSettings().getDescription().equals(description)) {
+                // update display name
+                mFirebaseMethods.updateUserAccountSettings(null, null, description, 0);
+            }
+
+            if (phoneNumber != 1) {
+                // update display name
+                mFirebaseMethods.updateUserAccountSettings(null, null, null, phoneNumber);
+            }
+        }
+
     }
+
+
             /*
     ------------------------------------ Firebase ---------------------------------------------
      */
